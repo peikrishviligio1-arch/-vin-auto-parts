@@ -1,34 +1,26 @@
 import Link from "next/link";
 
-export default function Home() {
-  const parts = [
-    "Mercedes CLS W218 LED ფარი",
-    "M276 3.0 Biturbo ძრავი",
-    "AMG დისკები R19",
-    "CLS W218 უკანა ფარი",
-  ];
-
+export default function AddListing() {
   return (
     <main style={{ padding: 24, fontFamily: "Arial" }}>
-      <h1><span style={{ color: "red" }}>VIN</span> AUTO PARTS</h1>
-      <h2>იპოვე სწორი ნაწილი VIN-ით</h2>
+      <Link href="/">← უკან დაბრუნება</Link>
 
-      <input
-        placeholder="შეიყვანე VIN ან ნაწილის სახელი..."
-        style={{ width: "100%", padding: 12, marginBottom: 16 }}
-      />
+      <h1>➕ განცხადების დამატება</h1>
 
-      <Link href="/add-listing">
-        <button style={{ width: "100%", padding: 14, marginBottom: 24, background: "red", color: "white", border: 0, borderRadius: 10, fontSize: 18 }}>
-          ➕ განცხადების დამატება
-        </button>
-      </Link>
+      <input placeholder="ნაწილის სახელი" style={{ width: "100%", padding: 12, marginBottom: 12 }} />
+      <input placeholder="მანქანის მარკა და მოდელი" style={{ width: "100%", padding: 12, marginBottom: 12 }} />
+      <input placeholder="VIN კოდი" style={{ width: "100%", padding: 12, marginBottom: 12 }} />
+      <input placeholder="ფასი" style={{ width: "100%", padding: 12, marginBottom: 12 }} />
+      <input placeholder="ქალაქი" style={{ width: "100%", padding: 12, marginBottom: 12 }} />
+      <input placeholder="ტელეფონის ნომერი" style={{ width: "100%", padding: 12, marginBottom: 12 }} />
 
-      {parts.map((part) => (
-        <div key={part} style={{ border: "1px solid #ddd", padding: 12, marginBottom: 10, borderRadius: 8 }}>
-          {part}
-        </div>
-      ))}
+      <input type="file" accept="image/*" style={{ width: "100%", padding: 12, marginBottom: 12 }} />
+
+      <textarea placeholder="აღწერა" style={{ width: "100%", padding: 12, height: 120, marginBottom: 12 }} />
+
+      <button style={{ width: "100%", padding: 14, background: "red", color: "white", border: "none", borderRadius: 10 }}>
+        განცხადების გამოქვეყნება
+      </button>
     </main>
   );
 }
