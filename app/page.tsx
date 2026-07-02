@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   const parts = [
     "Mercedes CLS W218 LED ფარი",
@@ -16,9 +18,11 @@ export default function Home() {
         style={{ width: "100%", padding: 12, marginBottom: 16 }}
       />
 
-      <button style={{ width: "100%", padding: 14, marginBottom: 24, background: "red", color: "white", border: 0, borderRadius: 10, fontSize: 18 }}>
-        ➕ განცხადების დამატება
-      </button>
+      <Link href="/add-listing">
+        <button style={{ width: "100%", padding: 14, marginBottom: 24, background: "red", color: "white", border: 0, borderRadius: 10, fontSize: 18 }}>
+          ➕ განცხადების დამატება
+        </button>
+      </Link>
 
       {parts.map((part) => (
         <div key={part} style={{ border: "1px solid #ddd", padding: 12, marginBottom: 10, borderRadius: 8 }}>
