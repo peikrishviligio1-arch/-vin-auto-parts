@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../lib/firebase";
+import { db } from "@/lib/firebase";
 
 export default function AddListing() {
   async function saveListing(event: any) {
@@ -49,19 +49,7 @@ export default function AddListing() {
           style={{ ...inputStyle, height: 160 }}
         />
 
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: 18,
-            background: "red",
-            color: "white",
-            border: "none",
-            borderRadius: 14,
-            fontSize: 18,
-            fontWeight: "bold",
-          }}
-        >
+        <button type="submit" style={buttonStyle}>
           განცხადების გამოქვეყნება
         </button>
       </form>
@@ -76,4 +64,15 @@ const inputStyle = {
   border: "1px solid #ddd",
   borderRadius: 10,
   fontSize: 16,
+};
+
+const buttonStyle = {
+  width: "100%",
+  padding: 18,
+  background: "red",
+  color: "white",
+  border: "none",
+  borderRadius: 14,
+  fontSize: 18,
+  fontWeight: "bold",
 };
