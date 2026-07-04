@@ -8,6 +8,8 @@ export default function AddListing() {
   async function saveListing(event: any) {
     event.preventDefault();
 
+    alert("ღილაკმა იმუშავა");
+
     try {
       const form = event.target;
 
@@ -25,6 +27,7 @@ export default function AddListing() {
       alert("განცხადება დაემატა ✅");
       form.reset();
     } catch (error: any) {
+      console.error(error);
       alert("შეცდომაა: " + error.message);
     }
   }
@@ -36,17 +39,53 @@ export default function AddListing() {
       <h1>+ განცხადების დამატება</h1>
 
       <form onSubmit={saveListing}>
-        <input name="partName" placeholder="ნაწილის სახელი" style={inputStyle} />
-        <input name="carModel" placeholder="მანქანის მარკა და მოდელი" style={inputStyle} />
-        <input name="vin" placeholder="VIN კოდი" style={inputStyle} />
-        <input name="price" placeholder="ფასი" style={inputStyle} />
-        <input name="city" placeholder="ქალაქი" style={inputStyle} />
-        <input name="phone" placeholder="ტელეფონის ნომერი" style={inputStyle} />
+        <input
+          name="partName"
+          placeholder="ნაწილის სახელი"
+          style={inputStyle}
+          required
+        />
+
+        <input
+          name="carModel"
+          placeholder="მანქანის მარკა და მოდელი"
+          style={inputStyle}
+          required
+        />
+
+        <input
+          name="vin"
+          placeholder="VIN კოდი"
+          style={inputStyle}
+          required
+        />
+
+        <input
+          name="price"
+          placeholder="ფასი"
+          style={inputStyle}
+          required
+        />
+
+        <input
+          name="city"
+          placeholder="ქალაქი"
+          style={inputStyle}
+          required
+        />
+
+        <input
+          name="phone"
+          placeholder="ტელეფონის ნომერი"
+          style={inputStyle}
+          required
+        />
 
         <textarea
           name="description"
           placeholder="აღწერა"
-          style={{ ...inputStyle, height: 160 }}
+          style={{ ...inputStyle, height: 150 }}
+          required
         />
 
         <button type="submit" style={buttonStyle}>
