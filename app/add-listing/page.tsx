@@ -4,18 +4,18 @@ import { useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 
-export default function AddListing() {
+export default function AddListingPage() {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [vin, setVin] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function saveListing(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (!title || !price || !description) {
-      alert("შეავსე ყველა აუცილებელი ველი");
+      alert("შეავსე დასახელება, ფასი და აღწერა");
       return;
     }
 
@@ -27,7 +27,7 @@ export default function AddListing() {
         price,
         vin,
         description,
-        createdAt: new Date(),
+        createdAt: new Date().toISOString(),
       });
 
       alert("განცხადება წარმატებით დაემატა");
@@ -37,46 +37,44 @@ export default function AddListing() {
       setVin("");
       setDescription("");
     } catch (error) {
-      console.error(error);
-      alert("შეცდომაა, განცხადება ვერ დაემატა");
+      console.error("Firebase error:", error);
+      alert("შეცდომაა — განცხადება ვერ დაემატა");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <main style={{ padding: "30px", maxWidth: "600px", margin: "0 auto" }}>
+    <main style={{ padding: "24px", maxWidth: "600px", margin: "0 auto" }}>
       <h1>განცხადების დამატება</h1>
 
-      <form onSubmit={saveListing} style={{ display: "grid", gap: "15px" }}>
+      <form onSubmit={handleSubmit} style={{ display: "grid", gap: "14px" }}>
         <input
-          type="text"
-          placeholder="ნაწილის დასახელება"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          placeholder="ნაწილის დასახელება"
           style={{ padding: "12px" }}
         />
 
         <input
-          type="number"
-          placeholder="ფასი"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
+          placeholder="ფასი"
+          type="number"
           style={{ padding: "12px" }}
         />
 
         <input
-          type="text"
-          placeholder="VIN კოდი"
           value={vin}
           onChange={(e) => setVin(e.target.value)}
+          placeholder="VIN კოდი"
           style={{ padding: "12px" }}
         />
 
         <textarea
-          placeholder="აღწერა"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          placeholder="აღწერა"
           style={{ padding: "12px", minHeight: "120px" }}
         />
 
@@ -87,7 +85,7 @@ export default function AddListing() {
             padding: "14px",
             background: "black",
             color: "white",
-            border: "none",
+            border: "0",
             borderRadius: "8px",
           }}
         >
