@@ -1,117 +1,99 @@
 "use client";
 
-import Link from "next/link";
+import { useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "../../lib/firebase";
 
 export default function AddListing() {
-  async function saveListing(event: any) {
-    event.preventDefault();
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [vin, setVin] = useState("");
+  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    alert("ღილაკმა იმუშავა");
+  async function saveListing(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (!title || !price || !description) {
+      alert("შეავსე ყველა აუცილებელი ველი");
+      return;
+    }
 
     try {
-      const form = event.target;
+      setLoading(true);
 
       await addDoc(collection(db, "listings"), {
-        partName: form.partName.value,
-        carModel: form.carModel.value,
-        vin: form.vin.value,
-        price: form.price.value,
-        city: form.city.value,
-        phone: form.phone.value,
-        description: form.description.value,
+        title,
+        price,
+        vin,
+        description,
         createdAt: new Date(),
       });
 
-      alert("განცხადება დაემატა ✅");
-      form.reset();
-    } catch (error: any) {
+      alert("განცხადება წარმატებით დაემატა");
+
+      setTitle("");
+      setPrice("");
+      setVin("");
+      setDescription("");
+    } catch (error) {
       console.error(error);
-      alert("შეცდომაა: " + error.message);
+      alert("შეცდომაა, განცხადება ვერ დაემატა");
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <main style={{ padding: 24, fontFamily: "Arial" }}>
-      <Link href="/">← უკან დაბრუნება</Link>
+    <main style={{ padding: "30px", maxWidth: "600px", margin: "0 auto" }}>
+      <h1>განცხადების დამატება</h1>
 
-      <h1>+ განცხადების დამატება</h1>
-
-      <form onSubmit={saveListing}>
+      <form onSubmit={saveListing} style={{ display: "grid", gap: "15px" }}>
         <input
-          name="partName"
-          placeholder="ნაწილის სახელი"
-          style={inputStyle}
-          required
+          type="text"
+          placeholder="ნაწილის დასახელება"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          style={{ padding: "12px" }}
         />
 
         <input
-          name="carModel"
-          placeholder="მანქანის მარკა და მოდელი"
-          style={inputStyle}
-          required
-        />
-
-        <input
-          name="vin"
-          placeholder="VIN კოდი"
-          style={inputStyle}
-          required
-        />
-
-        <input
-          name="price"
+          type="number"
           placeholder="ფასი"
-          style={inputStyle}
-          required
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          style={{ padding: "12px" }}
         />
 
         <input
-          name="city"
-          placeholder="ქალაქი"
-          style={inputStyle}
-          required
-        />
-
-        <input
-          name="phone"
-          placeholder="ტელეფონის ნომერი"
-          style={inputStyle}
-          required
+          type="text"
+          placeholder="VIN კოდი"
+          value={vin}
+          onChange={(e) => setVin(e.target.value)}
+          style={{ padding: "12px" }}
         />
 
         <textarea
-          name="description"
           placeholder="აღწერა"
-          style={{ ...inputStyle, height: 150 }}
-          required
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          style={{ padding: "12px", minHeight: "120px" }}
         />
 
-        <button type="submit" style={buttonStyle}>
-          განცხადების გამოქვეყნება
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            padding: "14px",
+            background: "black",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+          }}
+        >
+          {loading ? "ემატება..." : "განცხადების დამატება"}
         </button>
       </form>
     </main>
   );
 }
-
-const inputStyle = {
-  width: "100%",
-  padding: 18,
-  margin: "10px 0",
-  border: "1px solid #ddd",
-  borderRadius: 10,
-  fontSize: 16,
-};
-
-const buttonStyle = {
-  width: "100%",
-  padding: 18,
-  background: "red",
-  color: "white",
-  border: "none",
-  borderRadius: 14,
-  fontSize: 18,
-  fontWeight: "bold",
-};
