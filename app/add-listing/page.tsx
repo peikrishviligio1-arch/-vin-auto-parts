@@ -23,10 +23,10 @@ export default function AddListingPage() {
       setLoading(true);
 
       await addDoc(collection(db, "listings"), {
-        title,
-        price,
-        vin,
-        description,
+        title: title,
+        price: price,
+        vin: vin,
+        description: description,
         createdAt: new Date().toISOString(),
       });
 
@@ -37,7 +37,7 @@ export default function AddListingPage() {
       setVin("");
       setDescription("");
     } catch (error) {
-      console.error("Firebase error:", error);
+      console.error(error);
       alert("შეცდომაა — განცხადება ვერ დაემატა");
     } finally {
       setLoading(false);
@@ -78,17 +78,7 @@ export default function AddListingPage() {
           style={{ padding: "12px", minHeight: "120px" }}
         />
 
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            padding: "14px",
-            background: "black",
-            color: "white",
-            border: "0",
-            borderRadius: "8px",
-          }}
-        >
+        <button type="submit" disabled={loading} style={{ padding: "14px" }}>
           {loading ? "ემატება..." : "განცხადების დამატება"}
         </button>
       </form>
