@@ -23,10 +23,10 @@ export default function AddListingPage() {
       setLoading(true);
 
       await addDoc(collection(db, "listings"), {
-        title: title,
-        price: price,
-        vin: vin,
-        description: description,
+        title,
+        price,
+        vin,
+        description,
         createdAt: new Date().toISOString(),
       });
 
@@ -37,8 +37,8 @@ export default function AddListingPage() {
       setVin("");
       setDescription("");
     } catch (error) {
-      console.error(error);
       alert("შეცდომაა — განცხადება ვერ დაემატა");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -48,7 +48,7 @@ export default function AddListingPage() {
     <main style={{ padding: "24px", maxWidth: "600px", margin: "0 auto" }}>
       <h1>განცხადების დამატება</h1>
 
-      <form onSubmit={handleSubmit} style={{ display: "grid", gap: "14px" }}>
+      <form onSubmit={handleSubmit} style={{ display: "grid", gap: "12px" }}>
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -60,14 +60,13 @@ export default function AddListingPage() {
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           placeholder="ფასი"
-          type="number"
           style={{ padding: "12px" }}
         />
 
         <input
           value={vin}
           onChange={(e) => setVin(e.target.value)}
-          placeholder="VIN კოდი"
+          placeholder="VIN"
           style={{ padding: "12px" }}
         />
 
@@ -78,7 +77,17 @@ export default function AddListingPage() {
           style={{ padding: "12px", minHeight: "120px" }}
         />
 
-        <button type="submit" disabled={loading} style={{ padding: "14px" }}>
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            padding: "14px",
+            background: "black",
+            color: "white",
+            border: "0",
+            borderRadius: "8px",
+          }}
+        >
           {loading ? "ემატება..." : "განცხადების დამატება"}
         </button>
       </form>
